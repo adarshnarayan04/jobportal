@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:"https://jobportal-25u3.onrender.com",
+    origin: process.env.CORS_ORIGIN,
     credentials:true
 }
 app.use(cors(corsOptions));
