@@ -12,6 +12,10 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
         const file = req.file; 
+        if(!file)
+        {
+            return res.status(400).json({ message: "Profile photo is required", success: false });
+        }
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 

@@ -31,7 +31,8 @@ const userSchema = new mongoose.Schema({
         company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }, // Only for employers
         profilePhoto: {
             type: String,
-            default: ""
+            default: "",
+            required: true,
         },
     },
 }, { timestamps: true });
