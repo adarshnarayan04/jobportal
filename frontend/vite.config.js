@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'https://jobportal-25u3.onrender.com', 
+      // '/api': 'htthttp://localhost:8000'
     },
   },
   plugins: [react()],
