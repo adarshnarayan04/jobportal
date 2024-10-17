@@ -32,7 +32,7 @@ const Jobs = () => {
         if (authUser?.role === 'recruiter') {
             navigate("/admin/jobs");
         }
-    })
+    },[authUser])
     return (
         <div className='bg-gray-100 h-screen'>
             <Navbar />
