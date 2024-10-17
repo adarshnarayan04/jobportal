@@ -12,22 +12,22 @@ import useGetAllJobs from '@/hooks/useGetAllJobs'
 const Jobs = () => {
     useGetAllJobs();
     const { authUser } = useSelector((store) => store.auth);
-    const { allJobs, searchText } = useSelector((store) => store.job);
+    const { allJobs, filterText } = useSelector((store) => store.job);
     const [filterJobs, setFilterJobs] = useState(allJobs);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (searchText) {
+        if (filterText) {
             const filteredJobs = allJobs.filter((job) => {
-                return job.title.toLowerCase().includes(searchText.toLowerCase()) ||
-                    job.description.toLowerCase().includes(searchText.toLowerCase()) ||
-                    job?.location?.toLowerCase().includes(searchText.toLowerCase())
+                return job.title.toLowerCase().includes(filterText.toLowerCase()) ||
+                    job.description.toLowerCase().includes(filterText.toLowerCase()) ||
+                    job?.location?.toLowerCase().includes(filterText.toLowerCase())
             })
             setFilterJobs(filteredJobs);
         } else {
             setFilterJobs(allJobs);
         }
-    }, [allJobs, searchText]);
+    }, [allJobs, filterText]);
 
 
     useEffect(() => {

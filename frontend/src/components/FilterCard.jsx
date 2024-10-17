@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useDispatch } from 'react-redux';
-import { setSearchText } from '@/redux/jobSlice';
+import { setFilterText } from '@/redux/jobSlice';
 
 const filterData = [
     {
@@ -26,7 +26,7 @@ const FilterCard = () => {
         setSelectedValue(value);
     };
     useEffect(() => {
-        dispatch(setSearchText(selectedValue));
+        dispatch(setFilterText(selectedValue));
     }, [selectedValue])
 
     return (
