@@ -7,8 +7,10 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Jobnotfound from './Jobnotfound'
+import useGetAllJobs from '@/hooks/useGetAllJobs'
 
 const Jobs = () => {
+    useGetAllJobs();
     const { authUser } = useSelector((store) => store.auth);
     const { allJobs, searchText } = useSelector((store) => store.job);
     const [filterJobs, setFilterJobs] = useState(allJobs);
