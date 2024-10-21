@@ -48,7 +48,7 @@ const Job = ({ job }) => {
                 <Button className="bg-[#7209b7] rounded-lg">Save For Later</Button>
             </div>
             <div>
-                <ApplyJobDialog open={open} setOpen={setOpen} />
+                {/* <ApplyJobDialog open={open} setOpen={setOpen} />  we provided in the description so removed form here*/}
             </div>
         </div>
     )
