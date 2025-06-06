@@ -72,8 +72,18 @@ The application will be available at `http://localhost:8000`.
 ### Using Docker
 
 1. **Build and run with Docker Compose:**
+
    ```
    docker-compose up --build
+   ```
+   Make sure you have .env file at the root folder
+
+   The application will be available at `http://localhost:8000`.
+
+2. **Run with Docker only (without Compose):**
+   ```
+   docker pull adarshnarayan/jobportal
+   docker run --env-file .env -p 8000:8000 adarshnarayan/jobportal
    ```
    The application will be available at `http://localhost:8000`.
 
