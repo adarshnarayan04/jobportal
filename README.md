@@ -67,17 +67,7 @@ CORS_ORIGIN=http://localhost:5173
    npm run dev
    ```
 
-4. **Build the frontend:**
-
-   ```
-   npm run build --prefix frontend
-   ```
-
-5. **Run the backend server:**
-   ```
-   npm start
-   ```
-   The server will run on `http://localhost:8080` by default.
+The application will be available at `http://localhost:8000`.
 
 ### Using Docker
 
