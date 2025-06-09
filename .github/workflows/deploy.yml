@@ -2,7 +2,7 @@ name: Build and Deploy to Docker Hub
 
 on:
   push:
-    branches:
+    branches: # githib also create push event on merge ( so also work when we merge PR)
       - main
 
 jobs:
