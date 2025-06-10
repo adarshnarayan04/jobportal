@@ -28,3 +28,15 @@ jobs:
 
     - name: Verify Pushed Image
       run: docker pull adarshnarayan/jobportal:latest
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          sudo docker pull adarshnarayan/jobportal:latest
+          sudo docker stop job_portal || true
+          sudo docker rm job_portal || true
+          sudo docker run -d --name job_portal -p 8000:8000 adarshnarayan/jobportal:latest

@@ -1,4 +1,5 @@
-name: Build on PR
+name: Build on PR # to make sure the code is working before merging PR
+# as if the action is not working, we will not be able to merge the PR
 
 on:
   pull_request:
