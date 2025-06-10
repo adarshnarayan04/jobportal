@@ -9,6 +9,16 @@ import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js"
 import path from "path";
+import { rateLimit } from 'express-rate-limit';
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+	// store: ... , // Redis, Memcached, etc. See below.
+})
+
 
 dotenv.config();
 // connect db
@@ -24,6 +34,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(urlencoded({extended:true}));
 app.use(cookieParser());
+app.use(limiter);//for rate limiting
 const corsOptions = {
     origin: process.env.CORS_ORIGIN,
     credentials:true
