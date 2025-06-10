@@ -10,7 +10,7 @@ import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js"
 import path from "path";
 import { rateLimit } from 'express-rate-limit';
-
+// docs: https://www.npmjs.com/package/express-rate-limit
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
 	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
