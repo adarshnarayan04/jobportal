@@ -1,4 +1,4 @@
-# Job Portal
+# Job Hunt
 
 A full-stack Job Portal application that allows students and recruiters to register, manage profiles, post jobs, and apply for jobs. Built with Node.js, Express, MongoDB, and supports file uploads with Cloudinary. The frontend is built with React (Vite) and styled using Tailwind CSS.
 
