@@ -1,8 +1,7 @@
 import { Company } from "../models/company.model.js";
 import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/datauri.js";
-// import cloudinary from "../utils/cloudinary.js";
-
+import redis from "../utils/redis.js";
 
 export const registerCompany = async (req, res) => {
     try {
@@ -25,6 +24,10 @@ export const registerCompany = async (req, res) => {
             name: companyName,
             userId: req.id
         });
+
+        // Invalidate user companies cache
+        await redis.del(`companies:user:${req.id}`);
+        
         return res.status(201).json({
             message: "Company registered successfully.",
             company,
@@ -35,29 +38,65 @@ export const registerCompany = async (req, res) => {
         return res.status(400).json({ error })
     }
 }
+
 export const getCompany = async (req, res) => {
     try {
         const userId = req.id;
+        const cacheKey = `companies:user:${userId}`;
+        
+        // Try to get from Redis
+        const cachedCompanies = await redis.get(cacheKey);
+        if (cachedCompanies) {
+            return res.status(200).json({ 
+                companies: JSON.parse(cachedCompanies),
+                cached: true 
+            });
+        }
+        
         const companies = await Company.find({ userId });
         if (!companies) return res.status(404).json({ message: "company not found", success: false });
+        
+        // Cache for 30 minutes
+        await redis.set(cacheKey, JSON.stringify(companies), 'EX', 1800);
+        
         return res.status(200).json({ companies });
     } catch (error) {
-        console.log(error);
+        console.error("Error getting companies:", error);
+        return res.status(500).json({ message: "Failed to get companies", success: false });
     }
 }
+
 export const getCompanyById = async (req, res) => {
     try {
         const companyId = req.params.id;
+        const cacheKey = `company:${companyId}`;
+        
+        // Try to get from Redis
+        const cachedCompany = await redis.get(cacheKey);
+        if (cachedCompany) {
+            return res.status(200).json({
+                company: JSON.parse(cachedCompany),
+                success: true,
+                cached: true
+            });
+        }
+        
         const company = await Company.findById(companyId);
         if (!company) return res.status(404).json({ message: "Company not found!", success: false });
+        
+        // Cache for 30 minutes
+        await redis.set(cacheKey, JSON.stringify(company), 'EX', 1800);
+        
         return res.status(200).json({
             company,
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error("Error getting company by id:", error);
+        return res.status(500).json({ message: "Failed to get company", success: false });
     }
 }
+
 export const updateCompanyInformation = async (req, res) => {
     try {
         const { name, description, website, location } = req.body;
@@ -73,6 +112,10 @@ export const updateCompanyInformation = async (req, res) => {
             return res.status(404).json({ message: "Company not found!", success: false });
         }
 
+        // Invalidate the company cache
+        await redis.del(`company:${req.params.id}`);
+        await redis.del(`companies:user:${req.id}`);
+        
         return res.status(200).json({
             message: "Company information updated.",
             success: true
