@@ -39,4 +39,4 @@ jobs:
           sudo docker pull adarshnarayan/jobportal:latest
           sudo docker stop job_portal || true
           sudo docker rm job_portal || true
-          sudo docker run -d --name job_portal --env-file /home/ubuntu/.env -p 8000:8000 adarshnarayan/jobportal:latest
+          sudo docker run -d --name job_portal --restart unless-stopped --env-file /home/ubuntu/.env -p 8000:8000 adarshnarayan/jobportal:latest
