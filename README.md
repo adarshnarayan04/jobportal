@@ -74,7 +74,7 @@ The application will be available at `http://localhost:8000`.
 1. **Build and run with Docker Compose:**
 
    ```
-   docker-compose up --build
+   docker-compose -f docker-compose.dev.yaml up --build -d
    ```
    Make sure you have .env file at the root folder
 
