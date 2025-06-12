@@ -37,5 +37,5 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd /home/ubuntu
-          docker-compose -f docker-compose.prod.yaml pull
-          docker-compose -f docker-compose.prod.yaml up -d
+          sudo docker-compose -f docker-compose.prod.yaml pull
+          sudo docker-compose -f docker-compose.prod.yaml up -d
